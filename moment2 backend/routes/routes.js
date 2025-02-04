@@ -35,8 +35,15 @@ async function routes(fastify, options) {
         reply.header("Access-Control-Allow-Origin", "*");
         let { title, description, status } = request.body;
 
-        if (title.length === 0 || status.length === 0) {
-            return { message: "fälten 'title' och 'status' får inte lämnas tomma" }
+        if (title.length === 0) {
+            return { message: "fältet 'title' får inte lämnas tomt" }
+        }
+
+        status = status.toLowerCase();
+        if (status == "ej påbörjad" || status == "pågående" || status == "avklarad") {
+            // Gör så ej påbörjad sätts till default värde, här var det simplaste sättet jag kom på att göra det på här
+        } else {
+            status = "ej påbörjad"
         }
 
         const result = await collection.insertOne({ title: title, description: description, status: status })
