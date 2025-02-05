@@ -1,12 +1,12 @@
 import './Todo.css'
 
-const Todo = () => {
+const Todo = (props: any) => {
     return (
-        <article>
-            <h3>Todo</h3>
-            <p>Status</p>
-            <p>Beskrivning</p>
-        </article>
+        <>
+            <h3>{props.title}</h3>
+            <p>{props.status}</p>
+            <p>{props.description}</p>
+        </>
     )
 
 }
