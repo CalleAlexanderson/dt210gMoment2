@@ -6,7 +6,6 @@ async function routes(fastify, options) {
   
     // gjorde en middelware för att konvertera body i formatet string till ett object
     function convertBody(request, reply, next) {
-      console.log("konverterar body");
       if (typeof request.body === "string") {
         request.body = JSON.parse(request.body);
       }
@@ -46,8 +45,6 @@ async function routes(fastify, options) {
     fastify.post('/addtodo', todoSchema, async (request, reply) => {
         reply.header("Access-Control-Allow-Origin", "*");
         let { title, description, status } = request.body;
-        console.log(typeof request.body);
-        console.log(request.body);
         if (title.length === 0) {
             return { message: "fältet 'title' får inte lämnas tomt" }
         }
