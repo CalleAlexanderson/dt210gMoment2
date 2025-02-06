@@ -42,15 +42,18 @@ function TodoList() {
   return (
     <>
     {/* gjorde TodoList till parent till TodoForm så jag kan anropa funktionen för att updatera listan när formuläret skickas */}
-      <TodoForm update={getTodos}/>
+      <TodoForm update={getTodos} />
       <div className='todo-grid'>
         {
-          todos.map((todo) => (
-            // gjorde article här så key funkar
-            <article key={todo._id} id={todo._id}>
-              <Todo title={todo.title} status={todo.status} description={todo.description} />
-            </article>
-          ))
+          // Kollar så todos inte är tom
+          todos.length > 0 &&
+            todos.map((todo) => (
+              // gjorde article här så key funkar
+              <article key={todo._id}>
+                <Todo title={todo.title} status={todo.status} description={todo.description} id={todo._id} update={getTodos}/>
+              </article>
+            ))
+          
         }
       </div>
     </>
