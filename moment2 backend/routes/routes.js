@@ -50,7 +50,6 @@ async function routes(fastify, options) {
         if (title.length === 0) {
             return { message: "fältet 'title' får inte lämnas tomt" }
         }
-
         status = status.toLowerCase();
         if (status == "ej påbörjad" || status == "pågående" || status == "avklarad") {
             // Gör så ej påbörjad sätts till default värde, här var det simplaste sättet jag kom på att göra det på här
@@ -66,8 +65,9 @@ async function routes(fastify, options) {
     fastify.put('/updatetodo/:id', async (request, reply) => {
         reply.header("Access-Control-Allow-Origin", "*");
         id = new ObjectId(request.params.id);
+        let { title, description, status } = request.body;
 
-        const result = await collection.updateOne({ _id: id }, { $set: { title: request.body.title, description: request.description, status: request.body.status } })
+        const result = await collection.updateOne({ _id: id }, { $set: { title: title, description: description, status: status } })
         if (result.matchedCount == 0) {
             return { message: "id hittades inte" }
         }
