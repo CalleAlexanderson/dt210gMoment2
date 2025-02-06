@@ -29,6 +29,10 @@ const TodoForm = (props: any) => {
     // kollar så titel finns med
     if (!data.title) {
       validationErrors.title = "Fyll i titel"
+    } else {
+      if (data.title.length < 3) {
+        validationErrors.title = "Titeln måste vara minst 3 tecken"
+      }
     }
 
     // kollar så beskrivningen inte är längre än 200 tecken
