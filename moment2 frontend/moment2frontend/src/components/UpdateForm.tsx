@@ -2,18 +2,21 @@ import { useState } from "react";
 import "./TodoForm.css";
 import FormDataInterface from './Interfaces';
 
-const TodoForm = (props: any) => {
+const UpdateForm = (props: any) => {
 
   // interface för errors
   interface ErrorsInterface {
     title?: string,
     description?: string
   }
+
   const [formData, setFormData] = useState<FormDataInterface>({
     title: "",
-    status: "ej påbörjad",
+    status: props.status,
     description: "",
   });
+
+  const statusArr = ["Ej påbörjad", "Pågående", "Avklarad"] 
 
   const [errors, setErrors] = useState<ErrorsInterface>({});
 
@@ -21,9 +24,9 @@ const TodoForm = (props: any) => {
   const validateForm = (data: FormDataInterface) => {
     const validationErrors: ErrorsInterface = {};
 
-    // kollar så titel finns med
+    // om titel inte finns med så blir den samma som orginal
     if (!data.title) {
-      validationErrors.title = "Fyll i titel"
+        data.title = props.title
     } else {
       if (data.title.length < 3) {
         validationErrors.title = "Titeln måste vara minst 3 tecken"
@@ -52,35 +55,8 @@ const TodoForm = (props: any) => {
       // Tömmer errors staten
       setErrors({});
       console.log("inga errors")
-      updateDb(formData);
-    }
-  };
-
-  // Uppdaterar todos i databasen genom api
-  const updateDb = async (data: FormDataInterface) => {
-    console.log(data)
-
-    // fetch anrop till min backend som lägger till ny todo
-    try {
-      const response = await fetch("http://127.0.0.1:3000/addtodo", {
-        method: "POST",
-        body: JSON.stringify({
-          title: data.title,
-          status: data.status,
-          description: data.description
-        })
-      })
-
-      // kollar om anropet var lyckat
-      if (!response.ok) {
-        throw Error;
-      } else {
-        // anropar funktionen som skickas i props från TodoList
-        props.update();
-      }
-
-    } catch (err) {
-      console.log(err);
+      console.log(typeof formData)
+      props.update(formData);
     }
   };
 
@@ -102,6 +78,20 @@ const TodoForm = (props: any) => {
           {errors.title && <span>{errors.title}</span>}
         </div>
         <div>
+            <select name="" id="" 
+              onChange={(event) => {
+                // Uppdaterar status i formdata men behåller resten av värdena 
+                setFormData({ ...formData, status: event.target.value });
+              }}>
+                {
+                    // skapar options genom en array
+                    statusArr.map((stat, index) => (
+                        <option key={index} value={stat}>{stat}</option>
+                    ))
+                }
+            </select>
+        </div>
+        <div>
           <label htmlFor="desc"></label>
           <textarea
             name="desc"
@@ -114,10 +104,10 @@ const TodoForm = (props: any) => {
           ></textarea>
           {errors.description && <span>{errors.description}</span>}
         </div>
-        <input type="submit" value="Lägg till" />
+        <input type="submit" value="Uppdatera" />
       </form>
     </>
   );
 };
 
-export default TodoForm;
+export default UpdateForm;

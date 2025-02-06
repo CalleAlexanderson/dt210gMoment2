@@ -50,7 +50,7 @@ function TodoList() {
             todos.map((todo) => (
               // gjorde article här så key funkar
               <article key={todo._id}>
-                <Todo title={todo.title} status={todo.status} description={todo.description} id={todo._id} update={getTodos}/>
+                <Todo title={todo.title} status={todo.status} description={todo.description} id={todo._id} updateTodoProp={getTodos}/>
               </article>
             ))
           

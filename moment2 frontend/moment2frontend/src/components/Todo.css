@@ -3,11 +3,29 @@
     position: absolute;
 }
 
-.confirm-delete {
+.confirm-delete,
+.update-form {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
     border: 1px solid black;
     padding: 5px;
+}
+
+.update-form {
+    width: 300px;
+}
+
+.update-form > div {
+    width: calc(100% - 80px);
+    margin: 0 auto;
+}
+
+.form-close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 30px;
+    height: 30px;
 }

@@ -1,5 +1,7 @@
 import './Todo.css'
 import { useState } from "react";
+import UpdateForm from './UpdateForm';
+import FormDataInterface from './Interfaces';
 
 const Todo = (props: any) => {
 
@@ -19,7 +21,6 @@ const Todo = (props: any) => {
                 throw Error;
             } else {
                 // anropar funktionen som skickas i props från TodoList
-                console.log(response)
                 props.update();
             }
         } catch (err) {
@@ -28,13 +29,16 @@ const Todo = (props: any) => {
     }
 
     // uppdaterar en todo i databasen
-    const updateTodo = async (todoId: string) => {
-        console.log("uppdaterade: " + todoId);
-        // fetch anrop till min backend som lägger till ny todo
+    const updateTodo = async (data: FormDataInterface) => {
+
+        // fetch anrop till min backend som uppdaterar en todo
         try {
-            const response = await fetch(`http://127.0.0.1:3000/updatetodo/${todoId}`, {
+            const response = await fetch(`http://127.0.0.1:3000/updatetodo/${props.id}`, {
                 method: "PUT",
                 body: JSON.stringify({
+                    title: data.title,
+                    status: data.status,
+                    description: data.description
                 })
             })
 
@@ -43,7 +47,7 @@ const Todo = (props: any) => {
                 throw Error;
             } else {
                 // anropar funktionen som skickas i props från TodoList
-                props.update();
+                props.updateTodoProp();
             }
 
         } catch (err) {
@@ -70,7 +74,10 @@ const Todo = (props: any) => {
             </div>
 
             <div className={updateClass}>
-                <p>Uppdatera jajajajk</p>
+            <button className='form-close-btn' onClick={() => { setUpdateClass('hidden') }}>X</button>
+                <div>
+                    <UpdateForm update={updateTodo} title={props.title} status={props.status} />
+                </div>
             </div>
         </>
     )
