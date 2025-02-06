@@ -1,0 +1,13 @@
+.hidden {
+    visibility: hidden;
+    position: absolute;
+}
+
+.confirm-delete {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border: 1px solid black;
+    padding: 5px;
+}
