@@ -1,3 +1,5 @@
+const { ObjectId } = require('@fastify/mongodb');
+
 async function routes(fastify, options) {
     const collection = fastify.mongo.db.collection('todo')
 
@@ -62,7 +64,8 @@ async function routes(fastify, options) {
 
     // uppdaterar en todo
     fastify.put('/updatetodo/:id', async (request, reply) => {
-        reply.header("Access-Control-Allow-Origin", "*")
+        reply.header("Access-Control-Allow-Origin", "*");
+        id = new ObjectId(request.params.id);
 
         const result = await collection.updateOne({ _id: id }, { $set: { title: request.body.title, description: request.description, status: request.body.status } })
         if (result.matchedCount == 0) {
@@ -74,9 +77,9 @@ async function routes(fastify, options) {
     // tar bort en todo
     fastify.delete('/delete/:id', async (request, reply) => {
         reply.header("Access-Control-Allow-Origin", "*");
+        id = new ObjectId(request.params.id);
 
         const result = await collection.deleteOne({ _id: id })
-
         if (result.deletedCount == 0) {
             return { message: "id hittades inte" }
         }
