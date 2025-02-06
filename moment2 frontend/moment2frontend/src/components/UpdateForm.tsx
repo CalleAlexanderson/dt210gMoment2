@@ -11,9 +11,9 @@ const UpdateForm = (props: any) => {
   }
 
   const [formData, setFormData] = useState<FormDataInterface>({
-    title: "",
+    title: props.title,
     status: props.status,
-    description: "",
+    description: props.description,
   });
 
   const statusArr = ["Ej påbörjad", "Pågående", "Avklarad"] 
@@ -64,7 +64,7 @@ const UpdateForm = (props: any) => {
     <>
       <form onSubmit={submitForm}>
         <div>
-          <label htmlFor="title"></label>
+          <label htmlFor="title">Ny titel:</label>
           <input
             type="text"
             id="title"
@@ -75,10 +75,11 @@ const UpdateForm = (props: any) => {
               setFormData({ ...formData, title: event.target.value });
             }}
           />
-          {errors.title && <span>{errors.title}</span>}
+          {errors.title && <span className="error">{errors.title}</span>}
         </div>
         <div>
-            <select name="" id="" 
+        <label htmlFor="status">Status:</label>
+            <select name="status" id="status" 
               onChange={(event) => {
                 // Uppdaterar status i formdata men behåller resten av värdena 
                 setFormData({ ...formData, status: event.target.value });
@@ -92,7 +93,7 @@ const UpdateForm = (props: any) => {
             </select>
         </div>
         <div>
-          <label htmlFor="desc"></label>
+          <label htmlFor="desc">Ny beskrivning:</label>
           <textarea
             name="desc"
             id="desc"
@@ -102,7 +103,7 @@ const UpdateForm = (props: any) => {
               setFormData({ ...formData, description: event.target.value });
             }}
           ></textarea>
-          {errors.description && <span>{errors.description}</span>}
+          {errors.description && <span className="error">{errors.description}</span>}
         </div>
         <input type="submit" value="Uppdatera" />
       </form>

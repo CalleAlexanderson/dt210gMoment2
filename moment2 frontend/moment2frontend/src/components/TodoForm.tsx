@@ -32,7 +32,7 @@ const TodoForm = (props: any) => {
 
     // kollar så beskrivningen inte är längre än 200 tecken
     if (data.description.length > 200) {
-      validationErrors.description = "Beskrivningen får ej vara äver 200 tecken"
+      validationErrors.description = "Beskrivningen får ej vara över 200 tecken"
     }
 
     return validationErrors;
@@ -53,6 +53,12 @@ const TodoForm = (props: any) => {
       setErrors({});
       console.log("inga errors")
       updateDb(formData);
+      // resetar formulär
+      setFormData({
+        title: "",
+        status: "ej påbörjad",
+        description: "",
+      });
     }
   };
 
@@ -88,7 +94,7 @@ const TodoForm = (props: any) => {
     <>
       <form onSubmit={submitForm}>
         <div>
-          <label htmlFor="title"></label>
+          <label htmlFor="title">Titel:</label>
           <input
             type="text"
             id="title"
@@ -99,10 +105,10 @@ const TodoForm = (props: any) => {
               setFormData({ ...formData, title: event.target.value });
             }}
           />
-          {errors.title && <span>{errors.title}</span>}
+          {errors.title && <span className="error">{errors.title}</span>}
         </div>
         <div>
-          <label htmlFor="desc"></label>
+          <label htmlFor="desc">Beskrivning:</label>
           <textarea
             name="desc"
             id="desc"
@@ -112,7 +118,7 @@ const TodoForm = (props: any) => {
               setFormData({ ...formData, description: event.target.value });
             }}
           ></textarea>
-          {errors.description && <span>{errors.description}</span>}
+          {errors.description && <span className="error">{errors.description}</span>}
         </div>
         <input type="submit" value="Lägg till" />
       </form>

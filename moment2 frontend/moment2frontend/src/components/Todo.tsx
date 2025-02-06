@@ -21,7 +21,7 @@ const Todo = (props: any) => {
                 throw Error;
             } else {
                 // anropar funktionen som skickas i props från TodoList
-                props.update();
+                props.updateTodoProp();
             }
         } catch (err) {
             console.log(err);
@@ -48,6 +48,7 @@ const Todo = (props: any) => {
             } else {
                 // anropar funktionen som skickas i props från TodoList
                 props.updateTodoProp();
+                setUpdateClass('hidden')
             }
 
         } catch (err) {
@@ -76,7 +77,7 @@ const Todo = (props: any) => {
             <div className={updateClass}>
             <button className='form-close-btn' onClick={() => { setUpdateClass('hidden') }}>X</button>
                 <div>
-                    <UpdateForm update={updateTodo} title={props.title} status={props.status} />
+                    <UpdateForm update={updateTodo} title={props.title} status={props.status} description={props.description}/>
                 </div>
             </div>
         </>

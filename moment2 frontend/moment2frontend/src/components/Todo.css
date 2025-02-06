@@ -3,21 +3,35 @@
     position: absolute;
 }
 
+article {
+    background-color: #a1ffa1;
+    width: 90%;
+    max-width: 400px;
+    margin: 10px auto;
+    padding: 4px;
+    border: 1px solid black;
+}
+
+
+
 .confirm-delete,
 .update-form {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     border: 1px solid black;
     padding: 5px;
 }
 
 .update-form {
     width: 300px;
+    background-color: #a1ffa1;
+    box-shadow: 0px 1px 5px black;
+    border-radius: 10px;
 }
 
-.update-form > div {
+.update-form>div {
     width: calc(100% - 80px);
     margin: 0 auto;
 }
