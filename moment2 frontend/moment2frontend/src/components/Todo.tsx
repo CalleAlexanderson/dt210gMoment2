@@ -2,11 +2,14 @@ import './Todo.css'
 import { useState } from "react";
 import UpdateForm from './UpdateForm';
 import FormDataInterface from './Interfaces';
+import xmark from '../assets/xmark-solid.svg';
+import xmarkHover from '../assets/xmark-solid-hover.svg';
 
 const Todo = (props: any) => {
 
     const [deleteClass, setDeleteClass] = useState('hidden');
     const [updateClass, setUpdateClass] = useState('hidden');
+    const [buttonSrc, setbuttonSrc] = useState(xmark);
 
     // Tar bort en todo från databasen
     const deleteTodo = async (todoId: string) => {
@@ -62,20 +65,23 @@ const Todo = (props: any) => {
             <p>{props.status}</p>
             <p>{props.description}</p>
             {/* Knappar som visar divarna som används för uppdatering och bekräfta en delete */}
-            <button onClick={() => { setUpdateClass('update-form') }}>Uppdatera</button>
-            <button onClick={() => { setDeleteClass('confirm-delete') }}>Ta bort</button>
+            <button className='todo-option-btn' onClick={() => { setUpdateClass('update-form') }}>Ändra</button>
+            <button className='todo-option-btn' onClick={() => { setDeleteClass('confirm-delete') }}>Ta bort</button>
 
             {/* Bekräfta delete */}
             <div className={deleteClass}>
-                <p>Vill du ta bort: {props.title}</p>
-                <button onClick={() => { deleteTodo(props.id) }}>Ja</button>
+                <p>Vill du ta bort: "{props.title}"?</p>
+                <button onClick={() => { deleteTodo(props.id); setDeleteClass('hidden')}}>Ja</button>
                 <button onClick={() => {
                     setDeleteClass('hidden');
                 }}>Nej</button>
             </div>
 
             <div className={updateClass}>
-            <button className='form-close-btn' onClick={() => { setUpdateClass('hidden') }}>X</button>
+                {/* lade till en bild till knappen med state som sedan ändras på mouseEnter och mouseLeave */}
+            <button className='form-close-btn' onClick={() => { setUpdateClass('hidden') }} onMouseEnter={() => { setbuttonSrc(xmarkHover) }} onMouseLeave={() => { setbuttonSrc(xmark) }}>
+                <img src={buttonSrc} alt="Stäng formulär" />
+            </button>
                 <div>
                     <UpdateForm update={updateTodo} title={props.title} status={props.status} description={props.description}/>
                 </div>

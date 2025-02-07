@@ -50,11 +50,10 @@ async function routes(fastify, options) {
         if (title.length === 0) {
             return { message: "fältet 'title' får inte lämnas tomt" }
         }
-        status = status.toLowerCase();
-        if (status == "ej påbörjad" || status == "pågående" || status == "avklarad") {
+        if (status.toLowerCase() == "ej påbörjad" || status.toLowerCase() == "pågående" || status.toLowerCase() == "avklarad") {
             // Gör så ej påbörjad sätts till default värde, här var det simplaste sättet jag kom på att göra det på här
         } else {
-            status = "ej påbörjad"
+            status = "Ej påbörjad"
         }
 
         const result = await collection.insertOne({ title: title, description: description, status: status })

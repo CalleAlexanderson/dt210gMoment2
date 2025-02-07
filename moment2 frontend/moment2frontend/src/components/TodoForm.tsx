@@ -11,7 +11,7 @@ const TodoForm = (props: any) => {
   }
   const [formData, setFormData] = useState<FormDataInterface>({
     title: "",
-    status: "ej påbörjad",
+    status: "Ej påbörjad",
     description: "",
   });
 
@@ -56,7 +56,7 @@ const TodoForm = (props: any) => {
       // resetar formulär
       setFormData({
         title: "",
-        status: "ej påbörjad",
+        status: "Ej påbörjad",
         description: "",
       });
     }
@@ -120,7 +120,7 @@ const TodoForm = (props: any) => {
           ></textarea>
           {errors.description && <span className="error">{errors.description}</span>}
         </div>
-        <input type="submit" value="Lägg till" />
+        <input type="submit" value="Lägg till Todo" />
       </form>
     </>
   );
